@@ -1,0 +1,30 @@
+package project;
+
+import java.util.ArrayList;
+import java.util.Set;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+ public class AmazonAutomation {
+
+	public static void main(String[] args) {
+	ChromeDriver driver = new ChromeDriver(); //Initializes the Chrome browser using Selenium WebDriver.
+
+	driver.manage().window().maximize();     //Maximizes the browser window for better visibility.
+
+	driver.get("https://amazon.in/");     //Opens the Amazon India homepage.
+	driver.findElement(By.xpath("//input[@id='twotabsearchtextbox']")).sendKeys("wrist watches");   //Locates the search bar using its id and enters "wrist watches".
+  driver.findElement(By.xpath("//input[@id='twotabsearchtextbox']")).submit();     //Submits the search query by calling submit().
+  driver.findElement(By.xpath("//span[@class='a-size-base a-color-base'][normalize-space()='Leather']")).click();   //Filters the search results by selecting "Leather" and "Fastrack" filters.
+  driver.findElement(By.xpath("//span[@class='a-size-base a-color-base'][normalize-space()='Fastrack']")).click();   //Filters the search results by selecting "Leather" and "Fastrack" filters.
+  driver.findElement(By.xpath("(//div[@class='a-section a-spacing-base a-text-center'])[1]")).click();     //Selects the first product displayed in the search results using an XPath expression.
+
+	Set<String> s=driver.getWindowHandles();  //Amazon opens the product page in a new tab. getWindowHandles() fetches all open window handles.
+  ArrayList ar=new ArrayList(s);
+	System.out.println(ar.get(0));
+	System.out.println(ar.get(1));
+	driver.switchTo().window((String)ar.get(1));  //The program switches to the new window (product page) using switchTo().window().
+  driver.findElement(By.xpath("//input[@id='add-to-cart-button']")).click();   //Once on the product page, it locates the "Add to Cart" button using its id and clicks it to add the product to the cart.
+}
+}
